@@ -156,41 +156,41 @@ const AppAlert = () => {
 	);
 };
 
-const ProgressUpdate = (props: any) => {
-	return (
-		<>
-			{props.messageUpdate !== '' && (
-				<View
-					style={{
-						position: 'absolute',
-						top: 0,
-						left: 0,
-						right: 0,
-						bottom: 0,
-						backgroundColor: 'rgba(0, 0, 0, 0.7)',
-						alignItems: 'center',
-						justifyContent: 'center',
-					}}>
-					<View
-						style={{
-							backgroundColor: 'rgba(0, 0, 0, 0.7)',
-							alignItems: 'center',
-							justifyContent: 'center',
-							padding: 20,
-							borderRadius: 4,
-						}}>
-						<Text
-							style={{
-								color: 'white',
-							}}>
-							{props.messageUpdate}
-						</Text>
-					</View>
-				</View>
-			)}
-		</>
-	);
-};
+// const ProgressUpdate = (props: any) => {
+// 	return (
+// 		<>
+// 			{props.messageUpdate !== '' && (
+// 				<View
+// 					style={{
+// 						position: 'absolute',
+// 						top: 0,
+// 						left: 0,
+// 						right: 0,
+// 						bottom: 0,
+// 						backgroundColor: 'rgba(0, 0, 0, 0.7)',
+// 						alignItems: 'center',
+// 						justifyContent: 'center',
+// 					}}>
+// 					<View
+// 						style={{
+// 							backgroundColor: 'rgba(0, 0, 0, 0.7)',
+// 							alignItems: 'center',
+// 							justifyContent: 'center',
+// 							padding: 20,
+// 							borderRadius: 4,
+// 						}}>
+// 						<Text
+// 							style={{
+// 								color: 'white',
+// 							}}>
+// 							{props.messageUpdate}
+// 						</Text>
+// 					</View>
+// 				</View>
+// 			)}
+// 		</>
+// 	);
+// };
 
 const AppLoading = () => {
 	const [isShowLoading, setIsShowLoading] = useState<boolean>(false);
@@ -221,107 +221,107 @@ const App = () => {
 	};
 	const [messageProgressUpdate, setMessageProgressUpdate] = useState<string>('');
 
-	useEffect(() => {
-		fetch(`${Config.API_URL_SERVICE}api/MobileApp/GetVersion`, {
-			method: 'GET',
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-			},
-		})
-			.then(res => res.json())
-			.then(resJson => {
-				console.log('GetVersion=>>>>>>>>>>>>>>>', resJson);
-				let isUpdate = false;
-				const version = getVersion();
-				if (Platform.OS == 'ios') {
-					if (version !== resJson.iosVersion) {
-						isUpdate = true;
-					}
-				} else {
-					if (version !== resJson.androidVersion) {
-						isUpdate = true;
-					}
-				}
-				if (!isUpdate) setupCodePush();
-			});
-	}, []);
+	// useEffect(() => {
+	// 	fetch(`${Config.API_URL_SERVICE}api/MobileApp/GetVersion`, {
+	// 		method: 'GET',
+	// 		headers: {
+	// 			Accept: 'application/json',
+	// 			'Content-Type': 'application/json',
+	// 		},
+	// 	})
+	// 		.then(res => res.json())
+	// 		.then(resJson => {
+	// 			console.log('GetVersion=>>>>>>>>>>>>>>>', resJson);
+	// 			let isUpdate = false;
+	// 			const version = getVersion();
+	// 			if (Platform.OS == 'ios') {
+	// 				if (version !== resJson.iosVersion) {
+	// 					isUpdate = true;
+	// 				}
+	// 			} else {
+	// 				if (version !== resJson.androidVersion) {
+	// 					isUpdate = true;
+	// 				}
+	// 			}
+	// 			if (!isUpdate) setupCodePush();
+	// 		});
+	// }, []);
 
-	const setupCodePush = () => {
-		codePush
-			.sync(
-				{
-					deploymentKey: Config.CODE_PUSH_KEY,
-					// installMode: codePush.InstallMode.IMMEDIATE,
-					updateDialog: {
-						title: 'Thông báo',
-						optionalInstallButtonLabel: 'Cài đặt',
-						optionalIgnoreButtonLabel: 'Bỏ qua',
-						optionalUpdateMessage:
-							'Có bản cập nhật mới từ nhà phát triển. Bạn muốn cài đặt nó?',
-					},
-				},
-				codePushStatusDidChange,
-				codePushDownloadDidProgress,
-			)
-			.then((res: any) => {
-				codePush.getUpdateMetadata().then(current => {
-					if (current) {
-						console.log('appVersion --------', current?.appVersion, current?.label);
-						const v = `${current?.appVersion} ${current?.label}`;
-						_store.dispatch(saveVersion(v));
-					} else {
-						console.log('getVersion() ---------', getVersion());
-						_store.dispatch(saveVersion(getVersion()));
-					}
-				});
-			});
-	};
+	// const setupCodePush = () => {
+	// 	codePush
+	// 		.sync(
+	// 			{
+	// 				deploymentKey: Config.CODE_PUSH_KEY,
+	// 				// installMode: codePush.InstallMode.IMMEDIATE,
+	// 				updateDialog: {
+	// 					title: 'Thông báo',
+	// 					optionalInstallButtonLabel: 'Cài đặt',
+	// 					optionalIgnoreButtonLabel: 'Bỏ qua',
+	// 					optionalUpdateMessage:
+	// 						'Có bản cập nhật mới từ nhà phát triển. Bạn muốn cài đặt nó?',
+	// 				},
+	// 			},
+	// 			codePushStatusDidChange,
+	// 			codePushDownloadDidProgress,
+	// 		)
+	// 		.then((res: any) => {
+	// 			codePush.getUpdateMetadata().then(current => {
+	// 				if (current) {
+	// 					console.log('appVersion --------', current?.appVersion, current?.label);
+	// 					const v = `${current?.appVersion} ${current?.label}`;
+	// 					_store.dispatch(saveVersion(v));
+	// 				} else {
+	// 					console.log('getVersion() ---------', getVersion());
+	// 					_store.dispatch(saveVersion(getVersion()));
+	// 				}
+	// 			});
+	// 		});
+	// };
 
-	const codePushStatusDidChange = (status: any) => {
-		switch (status) {
-			case codePush.SyncStatus.CHECKING_FOR_UPDATE:
-				// console.log('codePush::Checking for updates.');
-				break;
-			case codePush.SyncStatus.DOWNLOADING_PACKAGE:
-				// console.log('codePush::Downloading package.');
-				setMessageProgressUpdate('Đang tải');
-				break;
-			case codePush.SyncStatus.INSTALLING_UPDATE:
-				// console.log('codePush::Installing update.');
-				setMessageProgressUpdate('Đang cài đặt vui lòng không tắt máy...');
-				break;
-			case codePush.SyncStatus.UP_TO_DATE: {
-				setMessageProgressUpdate('');
-				// console.log('codePush::Up-to-date.');
-				break;
-			}
-			case codePush.SyncStatus.UPDATE_INSTALLED:
-				// console.log('codePush::Update installed.');
-				setMessageProgressUpdate('Đang khởi động lại ứng dụng...');
-				setTimeout(() => {
-					codePush.restartApp();
-				}, 500);
-				break;
-		}
-	};
+	// const codePushStatusDidChange = (status: any) => {
+	// 	switch (status) {
+	// 		case codePush.SyncStatus.CHECKING_FOR_UPDATE:
+	// 			// console.log('codePush::Checking for updates.');
+	// 			break;
+	// 		case codePush.SyncStatus.DOWNLOADING_PACKAGE:
+	// 			// console.log('codePush::Downloading package.');
+	// 			setMessageProgressUpdate('Đang tải');
+	// 			break;
+	// 		case codePush.SyncStatus.INSTALLING_UPDATE:
+	// 			// console.log('codePush::Installing update.');
+	// 			setMessageProgressUpdate('Đang cài đặt vui lòng không tắt máy...');
+	// 			break;
+	// 		case codePush.SyncStatus.UP_TO_DATE: {
+	// 			setMessageProgressUpdate('');
+	// 			// console.log('codePush::Up-to-date.');
+	// 			break;
+	// 		}
+	// 		case codePush.SyncStatus.UPDATE_INSTALLED:
+	// 			// console.log('codePush::Update installed.');
+	// 			setMessageProgressUpdate('Đang khởi động lại ứng dụng...');
+	// 			setTimeout(() => {
+	// 				codePush.restartApp();
+	// 			}, 500);
+	// 			break;
+	// 	}
+	// };
 
-	const codePushDownloadDidProgress = (progress: any) => {
-		// console.log(
-		//   'codePush::',
-		//   progress.receivedBytes + ' of ' + progress.totalBytes + ' received.',
-		// );
-		setMessageProgressUpdate(
-			`Đang tải : ${
-				progress &&
-				progress.receivedBytes &&
-				progress.totalBytes &&
-				progress.totalBytes != 0
-					? Math.floor((progress.receivedBytes * 100) / progress.totalBytes)
-					: 0
-			}%`,
-		);
-	};
+	// const codePushDownloadDidProgress = (progress: any) => {
+	// 	// console.log(
+	// 	//   'codePush::',
+	// 	//   progress.receivedBytes + ' of ' + progress.totalBytes + ' received.',
+	// 	// );
+	// 	setMessageProgressUpdate(
+	// 		`Đang tải : ${
+	// 			progress &&
+	// 			progress.receivedBytes &&
+	// 			progress.totalBytes &&
+	// 			progress.totalBytes != 0
+	// 				? Math.floor((progress.receivedBytes * 100) / progress.totalBytes)
+	// 				: 0
+	// 		}%`,
+	// 	);
+	// };
 
 	return (
 		<SafeAreaView
@@ -340,7 +340,7 @@ const App = () => {
 			<AppAlert />
 			<AppLoading />
 			<FlashMessage style={styles.flashMessage} position="top" titleStyle={{margin: 8}} />
-			<ProgressUpdate messageUpdate={messageProgressUpdate} />
+			{/* <ProgressUpdate messageUpdate={messageProgressUpdate} /> */}
 		</SafeAreaView>
 	);
 };
