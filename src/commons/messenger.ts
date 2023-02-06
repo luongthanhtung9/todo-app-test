@@ -1,0 +1,1 @@
+export const CHECK_CONNECT_INTERNET = "Bạn vui lòng kiểm tra lại kết nối."
