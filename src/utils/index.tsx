@@ -1,9 +1,9 @@
 import React from 'react';
-import {showMessage} from 'react-native-flash-message';
+import { showMessage } from 'react-native-flash-message';
 import dayjs from 'dayjs';
 import jwt_decode from 'jwt-decode';
-import {Buffer} from 'buffer';
-import {AppAlertProps} from 'App';
+import { Buffer } from 'buffer';
+import { AppAlertProps } from 'App';
 import Icon from '@commons/Icon';
 import AppColors from '@commons/AppColors';
 
@@ -14,6 +14,14 @@ export function getUserLogin(token: string) {
 	}
 
 	return {};
+}
+
+export function getBackgroundTodo(level?: number, isComplete?: boolean) {
+	if (isComplete) return '#0CB98D'
+	if (level === 1) return '#0A7AFF'
+	if (level === 2) return '#FFD105'
+	if (level === 3) return '#CD0A07'
+
 }
 
 export function foramtDate(date?: string) {

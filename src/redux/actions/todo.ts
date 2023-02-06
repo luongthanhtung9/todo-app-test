@@ -1,30 +1,33 @@
-// import {
-// 	DEFAULT,
-// 	LAY_TAT_CA_CHUC_NANG_USER_ACTION,
-// 	LAY_TAT_CA_CHUC_NANG_USER_COMPLETE,
-// 	LOGIN_ACTION,
-// 	LOGIN_COMPLETE,
-// } from '../constants/authen';
+import {
+	DEFAULT,
+	ADD_TODO,
+    DELETE_TODO,
+	UPDATE_TODO,
 
-// export const actionDefault = () => {
-// 	return {
-// 		type: DEFAULT,
-// 	};
-// };
-// // đăng nhập
-// export const actionLogin = (payload: any) => {
-// 	return {
-// 		type: LOGIN_ACTION,
-// 		payload,
-// 	};
-// };
+} from '../constants/todo';
 
-// export const loginComplete = (payload: any) => {
-// 	return {
-// 		type: LOGIN_COMPLETE,
-// 		payload,
-// 	};
-// };
+export const actionDefault = () => {
+	return {
+		type: DEFAULT,
+	};
+};
+// action add todo
+export const actionAddTodo = (payload: any) => {
+    console.log('test');
+    
+	return {
+		type: ADD_TODO,
+		payload,
+	};
+};
+
+// action update todo
+export const actionUpdateTodo = (payload: any) => {
+	return {
+		type: UPDATE_TODO,
+		payload,
+	};
+};
 
 // // lấy tất cả chức năng của user
 // export const actionLayTatCaChucNangUser = () => {

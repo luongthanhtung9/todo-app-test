@@ -22,7 +22,11 @@ const sec = `${getBundleId()}.${getUniqueId()}`;
 // 	storage: AsyncStorage,
 // };
 
+const persistConfig = {
+	key: "root",
+	storage: AsyncStorage
+}
+
 export default combineReducers({
-	// configs: persistReducer(keyConfig, configs),
-	todo,
+	todo: persistReducer(persistConfig, todo),
 });

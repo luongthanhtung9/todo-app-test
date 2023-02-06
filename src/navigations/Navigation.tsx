@@ -1,58 +1,20 @@
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-import {Text, View} from 'react-native';
+import { Text, View } from 'react-native';
 import {
-	LoginScreen,
-	// HomeScreen,
-	// DSThongBaoScreen,
-	// DSVBDenScreen,
-	// CTVBDenScreen,
-	// DSVBDiScreen,
-	// DSToTrinhScreen,
-	// CTToTrinhScreen,
-	// DSGiaoViecScreen,
-	// CTGiaoViecScreen,
-	// DSCongViecScreen,
-	// CTCongViecScreen,
-	// PdfViewScreen,
-	// CTVBDiScreen,
-	// DSVBTheoDoiScreen,
-	// LichLDScreen,
-	// DangKyXeScreen,
-	// PhongHopScreen,
-	// ChiTietDangKyXeScreen,
-	// ChiTietPhongHopScreen,
-	// LichPHScreen
+	TodoScreen,
+	TodoDetailScreen,
 } from '@containers/index';
 import {
 	RootStackParamList,
-	LoginRoute,
-	HomeRoute,
-	DSThongBaoRoute,
-	DSVBDenRoute,
-	DSVBDiRoute,
-	DSToTrinhRoute,
-	CTToTrinhRoute,
-	DSGiaoViecRoute,
-	CTGiaoViecRoute,
-	DSCongViecRoute,
-	CTCongViecRoute,
-	CTVBDenRoute,
-	PdfViewRoute,
-	CTVBDiRoute,
-	DSVBTheoDoiRoute,
-	LichLDRoute,
-	DangKyXeRoute,
-	PhongHopRoute,
-	ChiTietDangKyXeRoute,
-	ChiTietPhongHopRoute,
-	LichPHRoute,
+	TodoRoute,
+	TodoDetailRoute,
 } from './NameRoute';
 
 export default function Navigation() {
 	return (
-		<View style={{width: '100%', height: '100%', margin: 0}}>
+		<View style={{ width: '100%', height: '100%', margin: 0 }}>
 			<NavigationContainer fallback={<Text>Loading...</Text>}>
 				<RootNavigator />
 			</NavigationContainer>
@@ -64,20 +26,10 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
 	return (
-		<Stack.Navigator screenOptions={{headerShown: false}} initialRouteName={LoginRoute}>
-			{/* <Stack.Screen key={HomeRoute} name={HomeRoute} component={HomeScreen} /> */}
+		<Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={TodoRoute}>
+			<Stack.Screen key={TodoRoute} name={TodoRoute} component={TodoScreen} />
 
-			<Stack.Screen key={LoginRoute} name={LoginRoute} component={LoginScreen} />
-			{/* <Stack.Screen
-				key={DSThongBaoRoute}
-				name={DSThongBaoRoute}
-				component={DSThongBaoScreen}
-			/>
-			<Stack.Screen key={DSVBDenRoute} name={DSVBDenRoute} component={DSVBDenScreen} />
-
-			<Stack.Screen key={CTVBDenRoute} name={CTVBDenRoute} component={CTVBDenScreen} />
-
-			{/* văn bản đi  */}
+			<Stack.Screen key={TodoDetailRoute} name={TodoDetailRoute} component={TodoDetailScreen} />
 		</Stack.Navigator>
 	);
 }

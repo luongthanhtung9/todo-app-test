@@ -8,18 +8,15 @@ import {loginComplete, layTatCaChucNangUserComplete, getVersionComplete} from '.
 import {fetchPOST, fetchGET} from '../../connections/connections';
 import {ApiResponse} from '@models/ApiResponse';
 import {selectToken} from '../selectorConfig';
+import { ADD_TODO } from '@redux/constants/todo';
 
-// function* _getversion() {
-// 	try {
-// 		const res: {
-// 			mobileVersion: string;
-// 			review: boolean;
-// 		} = yield fetchGET('api/MobileApp/GetVersion');
-// 		yield put(getVersionComplete(res));
-// 	} catch (e) {
-// 		yield put(getVersionComplete({success: false}));
-// 	}
-// }
+function* _getversion(action : any) {
+	try {
+		yield put(getVersionComplete(action.payload));
+	} catch (e) {
+		yield put(getVersionComplete({success: false}));
+	}
+}
 
 // function* _login(action: any) {
 // 	try {
@@ -44,7 +41,7 @@ import {selectToken} from '../selectorConfig';
 
 export function* watchInitial() {
 	yield all([
-		// takeLatest(GET_VERSION_ACTION, _getversion),
+		takeLatest(ADD_TODO, _addTodo),
 		// takeLatest(LOGIN_ACTION, _login),
 		// takeLatest(LAY_TAT_CA_CHUC_NANG_USER_ACTION, _layTatCaChucNangUser),
 	]);

@@ -10,6 +10,7 @@ export interface Props {
 	isSearch?: boolean;
 	showFilter?: () => void;
 	onBack?: () => void;
+	isBack?: boolean;
 }
 
 const HeaderComponent = (props: Props) => {
@@ -22,14 +23,15 @@ const HeaderComponent = (props: Props) => {
 
 	return (
 		<ImageBackground source={HeaderBGImage} style={styles.header}>
-			<TouchComponent style={styles.backView} onPress={_back}>
+			{props.isBack && <TouchComponent style={styles.backView} onPress={_back}>
 				<ArrowBackWhiteIcon />
 				{/* <Icon icon="pencil" size={20} color="#fff" />; */}
-			</TouchComponent>
+			</TouchComponent>}
 			<Text style={styles.titleCenter} numberOfLines={1}>
 				{props.title}
 			</Text>
-			{props.isSearch && (
+			{/* not use */}
+			{props.isBack && (
 				<TouchComponent style={styles.searchView} onPress={props.showFilter}>
 					<SearchIcon />
 				</TouchComponent>

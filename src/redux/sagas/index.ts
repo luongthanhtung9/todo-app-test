@@ -1,6 +1,6 @@
 import {all, fork} from 'redux-saga/effects';
-import * as Authen from './todo';
+import * as Todo from './todo';
 
 export default function* rootSaga() {
-	yield all([...Object.values(Authen)].map(fork));
+	yield all([...Object.values(Todo)].map(fork));
 }

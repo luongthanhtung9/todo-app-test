@@ -3,7 +3,7 @@ import {StyleSheet} from 'react-native';
 export default StyleSheet.create({
 	formView: {
 		// width: '100%',
-		// flex:1,
+		flex:1,
 		// paddingHorizontal: moderateScale(54)
 	},
 	form: {

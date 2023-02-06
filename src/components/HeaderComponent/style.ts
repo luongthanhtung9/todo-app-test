@@ -7,16 +7,17 @@ const deviceHeight = Dimensions.get('window').height;
 export default StyleSheet.create({
     header: {
         width: '100%',
-        height: verticalScale(65),
+        height: verticalScale(50),
         flexDirection: 'row',
         alignItems: 'center',
         alignContent: 'center',
     },
     titleCenter: {
-        width: deviceWidth - moderateScale(72),
+        // width: deviceWidth - moderateScale(72),
+        flex:1,
         textAlign: 'center',
         color: '#FFFFFF',
-        fontSize: moderateScale(17),
+        fontSize: moderateScale(14),
         fontFamily: 'arial',
         lineHeight: moderateScale(22),
     },
