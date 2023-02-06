@@ -23,34 +23,30 @@ const InputComponent = (props: Props) => {
 
 	return (
 		<View style={styles.formView}>
-			<View style={styles.form}>
-				<Text style={styles.title}>{props.title}</Text>
+			{/* <Text style={styles.title}>{props.title}</Text> */}
 
-				<View style={styles.viewInput}>
-					{props.icon && (
-						<View style={{marginStart: 10}}>
-							<Icon name={props.icon} size={14} color={'#C4C4C4'} />
-						</View>
-					)}
-					<TextInput
-						style={[
-							styles.input,
-							props.multiline
-								? {height: verticalScale(72)}
-								: {height: verticalScale(36)},
-						]}
-						multiline={props.multiline}
-						numberOfLines={props.numberOfLines}
-						placeholder={props.placeholder}
-						maxLength={props.multiline ? 1000 : 200}
-						editable
-						defaultValue={props.value}
-						underlineColorAndroid="transparent"
-						secureTextEntry={props.secureTextEntry}
-						onChange={_onChanged}
-						scrollEnabled={false}
-					/>
-				</View>
+			<View style={styles.viewInput}>
+				{props.icon && (
+					<View style={{marginStart: 10}}>
+						<Icon name={props.icon} size={14} color={'#C4C4C4'} />
+					</View>
+				)}
+				<TextInput
+					style={[
+						styles.input,
+						props.multiline ? {height: verticalScale(72)} : {height: verticalScale(36)},
+					]}
+					multiline={props.multiline}
+					numberOfLines={props.numberOfLines}
+					placeholder={props.placeholder}
+					maxLength={props.multiline ? 200 : 100}
+					editable
+					defaultValue={props.value}
+					underlineColorAndroid="transparent"
+					secureTextEntry={props.secureTextEntry}
+					onChange={_onChanged}
+					scrollEnabled={false}
+				/>
 			</View>
 		</View>
 	);

@@ -2,11 +2,12 @@ import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
 	formView: {
-		width: '100%',
+		// width: '100%',
+		// flex:1,
 		// paddingHorizontal: moderateScale(54)
 	},
 	form: {
-		width: '100%',
+		// width: '100%',
 	},
 	title: {
 		marginVertical: 12,
@@ -16,28 +17,30 @@ export default StyleSheet.create({
 		lineHeight: 14,
 	},
 	viewInput: {
+		marginVertical: 10,
 		flexDirection: 'row',
-		alignContent: 'center',
+		// alignContent: 'center',
 		alignItems: 'center',
 		borderRadius: 3,
 		borderWidth: 1,
 		borderColor: '#C4C4C4',
-		paddingEnd: 12,
-		justifyContent: 'center',
+		// paddingEnd: 12,
+		// justifyContent: 'center',
 	},
 	input: {
 		// width: '100%',
 		// backgroundColor: 'red',
-		flex: 1,
+		// flex: 1,
 		// opacity: 0.7,
-		height: 36,
+		// height: 36,
+		// width: '100%',
 		// borderRadius: 3,
 		// borderWidth: 1,
 		// borderColor: '#C4C4C4',
 		// justifyContent: 'center',
 		paddingHorizontal: 10,
 		// marginTop: 8,
-		textAlignVertical: 'top',
+		// textAlignVertical: 'top',
 		// paddingHorizontal: 12,
 	},
 	viewDate: {

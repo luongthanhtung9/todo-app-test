@@ -5,7 +5,6 @@ const AppColors = {
 	yellow: '#F8C630',
 	black: '#202020',
 	successColor: '#00B43C',
-	rejecet: '#BE1E2D',
 	pending: '#D29104',
 	red: '#EC1C24',
 	gray: '#F2F2F2',
