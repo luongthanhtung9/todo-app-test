@@ -30,7 +30,7 @@ export default StyleSheet.create({
 	input: {
 		// width: '100%',
 		// backgroundColor: 'red',
-		// flex: 1,
+		flex: 1,
 		// opacity: 0.7,
 		// height: 36,
 		// width: '100%',

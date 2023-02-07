@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">EDoc</string>
+    <string name="app_name">Todo App</string>
     <string moduleConfig="true" name="CodePushDeploymentKey"></string>
 </resources>

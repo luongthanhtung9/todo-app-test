@@ -1,6 +1,6 @@
 import AppColors from '@commons/AppColors';
 import DivideComponent from '@components/DivideComponent';
-import React, {memo} from 'react';
+import React, {LegacyRef, memo} from 'react';
 import {
 	View,
 	FlatList,
@@ -40,7 +40,7 @@ const FlatListComponent = (props: Props) => {
 	function _buildEmpty() {
 		return (
 			<View style={styles.empty}>
-				<Text style={styles.emptyTitle}>Danh sách trống</Text>
+				<Text style={styles.emptyTitle}>Todo list empty</Text>
 			</View>
 		);
 	}

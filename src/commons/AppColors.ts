@@ -13,6 +13,9 @@ const AppColors = {
 	green: '#0EACAF',
 	gray1: '#F0F0F0',
 	black1: '#4A4A4A',
+	blue: '#D6FFEE',
+	red1: '#FF2D55',
+	iconColorSelected: '#DCFFFB',
 };
 
 export default AppColors;

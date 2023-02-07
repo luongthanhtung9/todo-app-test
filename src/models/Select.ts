@@ -1,4 +1,4 @@
 export class Select {
-    value?: string;
-    label?: string;
+	value?: number;
+	label?: string;
 }

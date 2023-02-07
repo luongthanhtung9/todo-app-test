@@ -1,187 +1,164 @@
-import React, { memo, useState } from 'react';
-import { Text, View, Platform } from 'react-native';
-import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList, TodoDetailRoute } from '@navigations/NameRoute';
-import { useNavigation } from '@react-navigation/native';
-import InputComponent from '@components/InputComponent';
-import { FlatListComponent, HeaderComponent, TouchComponent } from '@components/index';
-import { TodoObj } from '@models/TodoObj';
-import { actionAddTodo, actionUpdateTodo } from '@redux/actions/todo';
-import { getBackgroundTodo } from '@utils/';
+import React, {memo, useEffect, useState} from 'react';
+import {Alert, Text, View} from 'react-native';
+import {RootStateOrAny, useDispatch, useSelector} from 'react-redux';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {AddTodoRoute, RootStackParamList, TodoDetailRoute} from '@navigations/NameRoute';
+import {useNavigation} from '@react-navigation/native';
+import {FlatListComponent, HeaderComponent, TouchComponent} from '@components/index';
+import {TodoObj} from '@models/TodoObj';
+import {actionUpdateTodo} from '@redux/actions/todo';
+import {getBackgroundTodo} from '@utils/';
+import Icon from '@commons/Icon';
+import {getPriority} from '@utils/index';
+import styles from './style';
+import AppColors from '@commons/AppColors';
 
-export interface Props {
-	userName?: string;
-}
-
-const TodoScreen = (props: Props) => {
+const TodoScreen = () => {
 	const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-
-	//priority 1 = low, 2 = medium, 3 = high
-	const [prioritySelect, setPrioritySelect] = useState<number>(1);
-
-	const [title, setTitle] = useState<string>('');
-	const [description, setDescription] = useState<string>('');
-
-	const { todoList } = useSelector((state: RootStateOrAny) => state.todo)
-	const dispatch = useDispatch()
+	const [listTask, setListTask] = useState<TodoObj[]>([]);
+	const [totalTaskComplete, setTotalTaskComplete] = useState<number>(0);
+	const [isSortHighToLow, setIsSortHighToLow] = useState<boolean>(false);
+	const {todoList} = useSelector((state: RootStateOrAny) => state.todo);
+	const dispatch = useDispatch();
 
 	const onDetailTodo = (item: TodoObj) => {
-		navigation.push(TodoDetailRoute, { data: item })
-	}
+		navigation.push(TodoDetailRoute, {data: item});
+	};
+
+	useEffect(() => {
+		setListTask(todoList);
+		const taskComplete = todoList.filter((item: TodoObj) => {
+			return item.isComplete;
+		});
+		setTotalTaskComplete(taskComplete.length);
+	}, [todoList]);
 
 	const deleteTodo = (id?: string) => {
-		const findIndex = todoList.findIndex((item: TodoObj) => {
-			return item.id === id
-		})
-		todoList.splice(findIndex, 1)
-		dispatch(actionUpdateTodo(todoList))
-	}
+		const cloneArr = [...listTask];
+		const findIndex = cloneArr.findIndex((item: TodoObj) => {
+			return item.id === id;
+		});
+		cloneArr.splice(findIndex, 1);
+		dispatch(actionUpdateTodo(cloneArr));
+	};
+
+	const updatePriority = (id?: string) => {
+		const cloneArr = [...todoList];
+		const findIndex = cloneArr.findIndex((item: TodoObj) => {
+			return item.id === id;
+		});
+		cloneArr[findIndex].isComplete = true;
+		dispatch(actionUpdateTodo(cloneArr));
+	};
 
 	const renderItem = (item: TodoObj) => {
 		return (
 			<TouchComponent
 				key={item.id}
-				onPress={() => { onDetailTodo(item) }}
-				style={{ backgroundColor: getBackgroundTodo(item.priorityLevel, item.isComplete), flex: 1, marginVertical: 8, borderRadius: 8, paddingVertical: 10, paddingHorizontal: 16 }}>
-				<View style={{ flexDirection: 'row', }}>
-					<Text style={{ fontSize: 12, fontWeight: 'bold', flex: 1, paddingVertical: 10 }}>{item.title}</Text>
+				onPress={() => {
+					onDetailTodo(item);
+				}}
+				style={[
+					{
+						backgroundColor: getBackgroundTodo(item.priorityLevel, item.isComplete),
+					},
+					styles.containerItem,
+				]}>
+				<View style={styles.row}>
+					<Text style={styles.title}>{item.title}</Text>
 					<TouchComponent
-						onPress={() => { deleteTodo(item.id) }}
-						style={{ width: 20, height: 20, borderRadius: 10, backgroundColor: '#FF2D55', alignItems: 'center', justifyContent: 'center' }}>
-						<Text style={{ color: '#FFF' }}>X</Text>
+						onPress={() => {
+							deleteTodo(item.id);
+						}}
+						style={styles.deleteButton}>
+						<Icon size={12} color={AppColors.white} name={'delete'} />
 					</TouchComponent>
 				</View>
-				<Text style={{ fontSize: 14, color: '#FFF', paddingBottom: 10 }}>{item.description}</Text>
+				<Text style={styles.description}>{item.description}</Text>
+				<Text style={styles.priority}>Priority: {getPriority(item.priorityLevel)}</Text>
+				<View
+					style={[
+						styles.row,
+						{
+							flex: 1,
+							justifyContent: 'space-between',
+							alignItems: 'center',
+						},
+					]}>
+					<Text style={styles.priority}>
+						Status: {item.isComplete ? 'Complete' : 'Todo'}
+					</Text>
+					<TouchComponent
+						disabled={item.isComplete}
+						onPress={() => {
+							Alert.alert('Confirm', 'Have you completed the task yet?', [
+								{
+									text: 'Cancel',
+									onPress: () => console.log('Cancel Pressed'),
+								},
+								{text: 'Yes', onPress: () => updatePriority(item.id)},
+							]);
+						}}
+						style={styles.completeButton}>
+						<Icon size={12} color={AppColors.black} name={'complete'} />
+					</TouchComponent>
+				</View>
 			</TouchComponent>
-		)
-
-	}
-	const resetState = () => {
-		setPrioritySelect(1);
-		setDescription('');
-		setTitle('');
+		);
 	};
 
-	const addTodo = () => {
-		if (title === '' && description === '') {
-			return;
+	// sort priority and name
+	const sortListTask = () => {
+		setIsSortHighToLow(!isSortHighToLow);
+		if (listTask.length === 0 || listTask.length === 1) return;
+		if (isSortHighToLow) {
+			listTask?.sort((task1: TodoObj, task2: TodoObj) => {
+				if ((task1.priorityLevel || 0) < (task2.priorityLevel || 0)) return -1;
+				if ((task1.priorityLevel || 0) > (task2.priorityLevel || 0)) return 1;
+				else {
+					if ((task1.title || '') < (task2.title || '')) return -1;
+					if ((task1.title || '') > (task2.title || '')) return 1;
+					return 0;
+				}
+			});
+		} else {
+			listTask?.sort((task1: TodoObj, task2: TodoObj) => {
+				if ((task2.priorityLevel || 0) < (task1.priorityLevel || 0)) return -1;
+				if ((task2.priorityLevel || 0) > (task1.priorityLevel || 0)) return 1;
+				else {
+					if ((task2.title || '') < (task1.title || '')) return -1;
+					if ((task2.title || '') > (task1.title || '')) return 1;
+					return 0;
+				}
+			});
 		}
-		const todoObj: TodoObj = {
-			id: `${title}${Math.floor(Math.random() * 1000)}${prioritySelect}`,
-			title,
-			description,
-			priorityLevel: prioritySelect,
-			isComplete: false
-		}
-		dispatch(actionAddTodo(todoObj))
-		resetState();
 	};
 
 	return (
 		<>
-		<HeaderComponent title={'TodoApp'}/>
-		<View style={{ flex: 1, paddingHorizontal: 16, backgroundColor: '#FFF' }}>
-			{/* <Text>TodoApp</Text> */}
-
-			<View style={{ flexDirection: 'row' }}>
-				<InputComponent
-					value={title}
-					placeholder="Enter title here"
-					onChange={text => setTitle(text)}
-				/>
-
-			</View>
-
-			<View style={{ flexDirection: 'row', alignItems: 'center', paddingVertical: 10 }}>
-				<Text>Piority:</Text>
-				<View style={{ flex: 1, flexDirection: 'row' }}>
+			<HeaderComponent
+				title={'TodoApp'}
+				isRight
+				onRightPress={() => {
+					navigation.push(AddTodoRoute);
+				}}
+			/>
+			<View style={styles.container}>
+				<View style={styles.countTotal}>
+					<Text>Total: {listTask.length}</Text>
+					<Text>Complete: {totalTaskComplete}</Text>
+				</View>
+				<View style={styles.containerSort}>
+					<Text>Sort by priority and name: </Text>
 					<TouchComponent
 						onPress={() => {
-							setPrioritySelect(1);
-						}}
-						style={{
-							marginHorizontal: 10,
-							justifyContent: 'center',
-							alignItems: 'center',
-							padding: 10,
-							borderRadius: 10,
-							backgroundColor: prioritySelect === 1 ? '#187779' : '#DCFFFB',
+							sortListTask();
 						}}>
-						<Text style={{ color: prioritySelect === 1 ? '#DCFFFB' : '#187779' }}>
-							Low
-						</Text>
-					</TouchComponent>
-					<TouchComponent
-						onPress={() => {
-							setPrioritySelect(2);
-						}}
-						style={{
-							marginHorizontal: 10,
-							justifyContent: 'center',
-							alignItems: 'center',
-							padding: 10,
-							borderRadius: 10,
-							backgroundColor: prioritySelect === 2 ? '#187779' : '#DCFFFB',
-						}}>
-						<Text style={{ color: prioritySelect === 2 ? '#DCFFFB' : '#187779' }}>
-							Medium
-						</Text>
-					</TouchComponent>
-					<TouchComponent
-						onPress={() => {
-							setPrioritySelect(3);
-						}}
-						style={{
-							marginHorizontal: 10,
-							justifyContent: 'center',
-							alignItems: 'center',
-							padding: 10,
-							borderRadius: 10,
-							backgroundColor: prioritySelect === 3 ? '#187779' : '#DCFFFB',
-						}}>
-						<Text style={{ color: prioritySelect === 3 ? '#DCFFFB' : '#187779' }}>
-							High
-						</Text>
+						<Icon name={isSortHighToLow ? 'circle-up' : 'circle-down'} size={16} />
 					</TouchComponent>
 				</View>
+				<FlatListComponent listData={listTask} buildItem={renderItem} />
 			</View>
-			<View
-				style={{
-					width: "100%",
-					flexDirection: 'row',
-					justifyContent: 'center',
-					alignItems: 'center',
-				}}>
-				<InputComponent
-					value={description}
-					placeholder="Enter description here"
-					onChange={text => setDescription(text)}
-					numberOfLines={2}
-					multiline
-				/>
-				<TouchComponent
-					onPress={addTodo}
-					style={{
-						marginHorizontal: 10,
-						justifyContent: 'center',
-						alignItems: 'center',
-						width: 30,
-						height: 30,
-						borderRadius: 15,
-						backgroundColor: '#DCFFFB',
-					}}>
-					<Text style={{ color: '#187779' }}>+</Text>
-				</TouchComponent>
-			</View>
-			<FlatListComponent
-				listData={todoList}
-
-				buildItem={renderItem}
-
-			/>
-			{/* <FlatListComponent data={[]}> */}
-		</View>
 		</>
 	);
 };
