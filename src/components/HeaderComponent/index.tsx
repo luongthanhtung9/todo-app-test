@@ -27,8 +27,8 @@ const HeaderComponent = (props: Props) => {
 		<ImageBackground source={HeaderBGImage} style={styles.header}>
 			{props.isBack ? (
 				<TouchComponent style={styles.backView} onPress={_back}>
-					<ArrowBackWhiteIcon />
-					{/* <Icon icon="pencil" size={20} color="#fff" />; */}
+					{/* <ArrowBackWhiteIcon /> */}
+					<Icon name="left" size={20} color="#fff" />
 				</TouchComponent>
 			) : (
 				<View style={styles.backView} />

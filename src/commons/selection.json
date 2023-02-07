@@ -64,6 +64,35 @@
     {
       "icon": {
         "paths": [
+          "M797.44 59.040l-452 452.96 452 452.96-58.88 59.040-512-512 512-512z"
+        ],
+        "attrs": [
+          {}
+        ],
+        "isMulticolor": false,
+        "isMulticolor2": false,
+        "tags": [
+          "Untitled-1_line-left"
+        ],
+        "grid": 16
+      },
+      "attrs": [
+        {}
+      ],
+      "properties": {
+        "order": 9,
+        "id": 258,
+        "name": "left",
+        "prevSize": 32,
+        "code": 59739
+      },
+      "setIdx": 1,
+      "setId": 1,
+      "iconIdx": 258
+    },
+    {
+      "icon": {
+        "paths": [
           "M1024 468.96v86.080h-469.12v468.96h-85.92v-468.96h-468.96v-86.080h468.96v-468.96h86.080v468.96z"
         ],
         "attrs": [
