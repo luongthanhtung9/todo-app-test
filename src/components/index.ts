@@ -15,6 +15,7 @@ import MenuHDComponent from './MenuHDComponent/index';
 import SelectDateComponent from './SelectDateComponent/index';
 import SelectFromToDateComponent from './SelectFromToDateComponent';
 import BottomModalComponent from './BottomModalComponent';
+import SwipeoutComponent from './SwipeoutComponent';
 
 export {
 	HeaderComponent,
@@ -34,4 +35,5 @@ export {
 	SelectDateComponent,
 	SelectFromToDateComponent,
 	BottomModalComponent,
+    SwipeoutComponent,
 };

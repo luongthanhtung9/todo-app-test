@@ -1,4 +1,4 @@
-import {StyleProp, StyleSheet, Text, TextStyle, View, ViewStyle} from 'react-native';
+import {StyleProp, StyleSheet, Text, TextStyle, ViewStyle} from 'react-native';
 import React from 'react';
 import {TouchComponent} from '@components/index';
 import AppColors from '@commons/AppColors';
@@ -10,7 +10,7 @@ interface Props {
 	transparentBg?: boolean;
 	disable?: boolean;
 	width?: number;
-    styleText?: StyleProp<TextStyle>;
+	styleText?: StyleProp<TextStyle>;
 }
 
 const ButtonRadius = ({onPress, title, transparentBg, disable, width, style, styleText}: Props) => {
@@ -31,7 +31,7 @@ const ButtonRadius = ({onPress, title, transparentBg, disable, width, style, sty
 						: AppColors.green,
 					width,
 				},
-                style,
+				style,
 			]}
 			disabled={disable}
 			onPress={onPress}>
@@ -45,7 +45,7 @@ const ButtonRadius = ({onPress, title, transparentBg, disable, width, style, sty
 							? AppColors.black
 							: AppColors.while,
 					},
-                    styleText
+					styleText,
 				]}>
 				{title}
 			</Text>

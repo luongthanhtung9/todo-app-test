@@ -4,7 +4,7 @@ import {StyleSheet} from 'react-native';
 export default StyleSheet.create({
 	containerItem: {
 		flex: 1,
-		marginVertical: 8,
+		// marginVertical: 8,
 		borderRadius: 8,
 		paddingVertical: 10,
 		paddingHorizontal: 16,
@@ -38,6 +38,7 @@ export default StyleSheet.create({
 		fontSize: 14,
 		color: AppColors.white,
 		fontWeight: 'bold',
+		paddingVertical: 4,
 	},
 	container: {
 		flex: 1,
@@ -53,7 +54,7 @@ export default StyleSheet.create({
 		marginVertical: 10,
 		flexDirection: 'row',
 	},
-    completeButton: {
+	completeButton: {
 		width: 36,
 		height: 36,
 		borderRadius: 18,

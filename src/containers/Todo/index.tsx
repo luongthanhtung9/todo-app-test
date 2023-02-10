@@ -4,14 +4,18 @@ import {RootStateOrAny, useDispatch, useSelector} from 'react-redux';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {AddTodoRoute, RootStackParamList, TodoDetailRoute} from '@navigations/NameRoute';
 import {useNavigation} from '@react-navigation/native';
-import {FlatListComponent, HeaderComponent, TouchComponent} from '@components/index';
+import {
+	FlatListComponent,
+	HeaderComponent,
+	SwipeoutComponent,
+	TouchComponent,
+} from '@components/index';
 import {TodoObj} from '@models/TodoObj';
 import {actionUpdateTodo} from '@redux/actions/todo';
 import {getBackgroundTodo} from '@utils/';
 import Icon from '@commons/Icon';
 import {getPriority} from '@utils/index';
 import styles from './style';
-import AppColors from '@commons/AppColors';
 
 const TodoScreen = () => {
 	const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
@@ -53,57 +57,57 @@ const TodoScreen = () => {
 
 	const renderItem = (item: TodoObj) => {
 		return (
-			<TouchComponent
-				key={item.id}
-				onPress={() => {
-					onDetailTodo(item);
+			<SwipeoutComponent
+				onDelete={() => {
+					deleteTodo(item.id);
 				}}
-				style={[
-					{
-						backgroundColor: getBackgroundTodo(item.priorityLevel, item.isComplete),
-					},
-					styles.containerItem,
-				]}>
-				<View style={styles.row}>
-					<Text style={styles.title}>{item.title}</Text>
-					<TouchComponent
-						onPress={() => {
-							deleteTodo(item.id);
-						}}
-						style={styles.deleteButton}>
-						<Icon size={12} color={AppColors.white} name={'delete'} />
-					</TouchComponent>
-				</View>
-				<Text style={styles.description}>{item.description}</Text>
-				<Text style={styles.priority}>Priority: {getPriority(item.priorityLevel)}</Text>
-				<View
-					style={[
-						styles.row,
+				onComplete={() => {
+					Alert.alert('Confirm', 'Have you completed the task yet?', [
 						{
-							flex: 1,
-							justifyContent: 'space-between',
-							alignItems: 'center',
+							text: 'Cancel',
+							onPress: () => console.log('Cancel Pressed'),
 						},
-					]}>
-					<Text style={styles.priority}>
-						Status: {item.isComplete ? 'Complete' : 'Todo'}
-					</Text>
+						{text: 'Yes', onPress: () => updatePriority(item.id)},
+					]);
+				}}>
+				<View style={{marginVertical: 8}}>
 					<TouchComponent
-						disabled={item.isComplete}
+						key={item.id}
 						onPress={() => {
-							Alert.alert('Confirm', 'Have you completed the task yet?', [
-								{
-									text: 'Cancel',
-									onPress: () => console.log('Cancel Pressed'),
-								},
-								{text: 'Yes', onPress: () => updatePriority(item.id)},
-							]);
+							onDetailTodo(item);
 						}}
-						style={styles.completeButton}>
-						<Icon size={12} color={AppColors.black} name={'complete'} />
+						style={[
+							{
+								backgroundColor: getBackgroundTodo(
+									item.priorityLevel,
+									item.isComplete,
+								),
+							},
+							styles.containerItem,
+						]}>
+						<View style={styles.row}>
+							<Text style={styles.title}>{item.title}</Text>
+						</View>
+						<Text style={styles.description}>{item.description}</Text>
+						<Text style={styles.priority}>
+							Priority: {getPriority(item.priorityLevel)}
+						</Text>
+						<View
+							style={[
+								styles.row,
+								{
+									flex: 1,
+									justifyContent: 'space-between',
+									alignItems: 'center',
+								},
+							]}>
+							<Text style={styles.priority}>
+								Status: {item.isComplete ? 'Complete' : 'Todo'}
+							</Text>
+						</View>
 					</TouchComponent>
 				</View>
-			</TouchComponent>
+			</SwipeoutComponent>
 		);
 	};
 
