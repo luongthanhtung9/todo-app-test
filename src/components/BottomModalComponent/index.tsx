@@ -3,8 +3,6 @@ import {View, Text, Modal} from 'react-native';
 import {TouchComponent, FlatListComponent} from '@components/index';
 import styles from './style';
 import {Select} from '@models/Select';
-import ButtonRadius from '@components/ButtonRadiusComponent/ButtonRadius';
-import {Success} from '@images/index';
 
 export interface Props {
 	title?: string;
@@ -58,7 +56,6 @@ const SelectUser = (props: Props) => {
 			key={index}
 			onPress={() => _onSelect(item, index)}>
 			<Text style={styles.textItemSelect}>{item.label}</Text>
-			{indexSelect === index && <Success />}
 		</TouchComponent>
 	);
 
@@ -66,13 +63,13 @@ const SelectUser = (props: Props) => {
 		<View style={styles.formView}>
 			<Modal
 				// animationType="slide"
-				animationType={'none'}
+				// animationType={'none'}
 				transparent={true}
 				visible={props.isVisible}
 				onRequestClose={() => {
-					setIsSelect(false);
+					_onClose();
 				}}>
-				<TouchComponent onPress={() => setIsSelect(false)} style={styles.centeredView}>
+				<TouchComponent onPress={() => _onClose()} style={styles.centeredView}>
 					<View style={styles.modalView}>
 						<View
 							style={{
@@ -90,8 +87,8 @@ const SelectUser = (props: Props) => {
 							<FlatListComponent listData={listData} buildItem={renderItem} />
 						</View>
 						<View style={styles.viewBottom}>
-							<ButtonRadius transparentBg onPress={_onClose} title={'Close'} />
-							<ButtonRadius onPress={_onAccept} title={'Select'} />
+							<TouchComponent transparentBg onPress={_onClose} title={'Close'} />
+							<TouchComponent onPress={_onAccept} title={'Select'} />
 						</View>
 					</View>
 				</TouchComponent>
